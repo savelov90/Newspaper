@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newspaper.R
 import com.example.newspaper.data.Article
@@ -13,35 +16,28 @@ import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
+import com.example.newspaper.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var newsAdapter: NewsListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
 
-    val source = Source("2", "New York Times")
-    val newsDataBase = listOf(
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-        Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-            "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-    )
+    private val viewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
+    }
+
+    private var newsDataBase = listOf<Article>()
+
+        //Используем backing field
+        set(value) {
+            //Если придет такое же значение то мы выходим из метода
+            if (field == value) return
+            //Если прило другое значение, то кладем его в переменную
+            field = value
+            //Обновляем RV адаптер
+            newsAdapter.addItems(field)
+        }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +51,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyckler()
+
+        var list = viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
+            newsDataBase = it
+        })
+
+
     }
 
     private fun initRecyckler() {
@@ -76,8 +78,8 @@ class HomeFragment : Fragment() {
             val decorator = TopSpacingItemDecoration(10)
             addItemDecoration(decorator)
         }
-//Кладем нашу БД в RV
-        newsAdapter.addItems(newsDataBase)
+
+
     }
 
 
