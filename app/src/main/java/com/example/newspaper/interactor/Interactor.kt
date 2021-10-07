@@ -16,7 +16,6 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
                 //При успехе мы вызываем метод передаем onSuccess и в этот коллбэк список фильмов
                 response.body()?.articles?.let { callback.onSuccess(it) }
-                println("!!! + ${response.body()}")
             }
 
             override fun onFailure(call: Call<NewsData>, t: Throwable) {

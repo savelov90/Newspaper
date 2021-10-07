@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
 
         initRecyckler()
 
-        var list = viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
+       viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
             newsDataBase = it
         })
 
