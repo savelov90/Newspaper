@@ -1,28 +1,20 @@
 package com.example.newspaper.data
 
-class MainRepository {
+import com.example.newspaper.data.dao.NewsDao
+import com.example.newspaper.data.entity.Article
+import java.util.concurrent.Executors
 
-    val source = Source("2", "New York Times")
-    val newsDataBase = listOf(
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-            Article("19:22", source,"This should be a description, fucking fuck, fucking fuck, fucking fuck",
-                    "https://saintscalpelburg.com/wp-content/uploads/2021/04/4vqCQ5XlOcg-1-1024x579.jpg"),
-    )
+class MainRepository(private val newsDao: NewsDao) {
+
+    fun putToDb(article: List<Article>) {
+        //Запросы в БД должны быть в отдельном потоке
+        Executors.newSingleThreadExecutor().execute {
+            newsDao.insertAll(article)
+        }
+    }
+
+    fun getAllFromDB(): List<Article> {
+        return newsDao.getCachedFilms()
+    }
+
 }

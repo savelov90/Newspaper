@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newspaper.R
-import com.example.newspaper.data.Article
+import com.example.newspaper.data.entity.Article
 import com.example.newspaper.view.rv_viewholders.NewsViewHolder
 
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity

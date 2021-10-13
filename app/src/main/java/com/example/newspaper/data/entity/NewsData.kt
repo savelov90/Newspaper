@@ -1,4 +1,4 @@
-package com.example.newspaper.data
+package com.example.newspaper.data.entity
 
 data class NewsData(
         val articles: List<Article>,
