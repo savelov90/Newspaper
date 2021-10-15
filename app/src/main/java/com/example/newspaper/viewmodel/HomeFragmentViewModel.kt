@@ -3,7 +3,7 @@ package com.example.newspaper.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
-import com.example.newspaper.data.entity.Article
+import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.interactor.Interactor
 import java.util.concurrent.Executors
 import javax.inject.Inject

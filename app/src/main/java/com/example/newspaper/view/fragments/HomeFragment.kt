@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newspaper.data.entity.Article
+import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter

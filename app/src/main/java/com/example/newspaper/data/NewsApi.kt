@@ -1,6 +1,6 @@
 package com.example.newspaper.data
 
-import com.example.newspaper.data.entity.NewsData
+import com.example.newspaper.data.db_first.entity.NewsData
 import retrofit2.Call
 import retrofit2.http.GET
 

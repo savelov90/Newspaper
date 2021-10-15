@@ -1,4 +1,4 @@
-package com.example.newspaper.data.entity
+package com.example.newspaper.data.db_first.entity
 
 data class Source(
     //val id: String,

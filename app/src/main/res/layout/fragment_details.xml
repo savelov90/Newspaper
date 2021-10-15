@@ -63,7 +63,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="left|bottom"
         app:srcCompat="@drawable/ic_sharp_favorite_border_24"
-        app:tint="@android:color/black" />
+        app:tint="@android:color/holo_red_dark" />
 
   <!--  <ProgressBar
         android:id="@+id/progress_bar"

@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.newspaper.R
-import com.example.newspaper.data.entity.Article
+import com.example.newspaper.data.db_fav.ArticleFavorite
+import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentDetailsBinding
 
 
@@ -15,6 +16,7 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var article: Article
+    private lateinit var articleFavorite: ArticleFavorite
 
 
     override fun onCreateView(
@@ -30,6 +32,16 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setFilmsDetails()
+
+        binding.detailsFabFavorites.setOnClickListener {
+            if (!article.isInFavorites) {
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
+                article.isInFavorites = true
+            } else {
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_border_24)
+                article.isInFavorites = false
+            }
+        }
     }
 
     private fun setFilmsDetails() {

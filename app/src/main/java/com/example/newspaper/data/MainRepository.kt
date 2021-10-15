@@ -1,7 +1,8 @@
 package com.example.newspaper.data
 
-import com.example.newspaper.data.dao.NewsDao
-import com.example.newspaper.data.entity.Article
+import com.example.newspaper.data.db_fav.ArticleFavorite
+import com.example.newspaper.data.db_first.dao.NewsDao
+import com.example.newspaper.data.db_first.entity.Article
 import java.util.concurrent.Executors
 
 class MainRepository(private val newsDao: NewsDao) {
@@ -15,6 +16,12 @@ class MainRepository(private val newsDao: NewsDao) {
 
     fun getAllFromDB(): List<Article> {
         return newsDao.getCachedFilms()
+    }
+
+    fun putToDb(articleFavorite: ArticleFavorite) {
+        Executors.newSingleThreadExecutor().execute {
+            newsDao.insertFav(articleFavorite)
+        }
     }
 
 }

@@ -2,8 +2,8 @@ package com.example.newspaper.interactor
 
 import com.example.newspaper.data.MainRepository
 import com.example.newspaper.data.NewsApi
-import com.example.newspaper.data.entity.Article
-import com.example.newspaper.data.entity.NewsData
+import com.example.newspaper.data.db_first.entity.Article
+import com.example.newspaper.data.db_first.entity.NewsData
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
 import retrofit2.Call
 import retrofit2.Callback

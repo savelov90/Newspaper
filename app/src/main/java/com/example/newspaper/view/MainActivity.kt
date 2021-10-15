@@ -3,7 +3,7 @@ package com.example.newspaper.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.newspaper.R
-import com.example.newspaper.data.entity.Article
+import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.view.fragments.DetailsFragment
 import com.example.newspaper.view.fragments.HomeFragment
 
