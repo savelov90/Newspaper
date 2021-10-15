@@ -27,6 +27,9 @@ class NewsListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
                 //Вызываем метод bind(), который мы создали, и передаем туда объект
                 //из нашей базы данных с указанием позиции
                 holder.bind(items[position])
+                holder.itemView.setOnClickListener {
+                    clickListener.click(items[position])
+                }
             }
         }
     }

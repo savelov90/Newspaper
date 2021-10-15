@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newspaper.data.entity.Article
 import com.example.newspaper.databinding.FragmentHomeBinding
+import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
 
+@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
     private lateinit var newsAdapter: NewsListRecyclerAdapter
@@ -35,12 +37,22 @@ class HomeFragment : Fragment() {
             newsAdapter.addItems(field)
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+
+
+    }
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+        initRecyckler()
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,9 +60,10 @@ class HomeFragment : Fragment() {
 
         initRecyckler()
 
-       viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
+        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
             newsDataBase = it
         })
+        newsAdapter.addItems(newsDataBase)
 
 
     }
@@ -60,12 +73,12 @@ class HomeFragment : Fragment() {
         binding.mainRecycler.apply {
             //Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс,
             //оставим его пока пустым, он нам понадобится во второй части задания
-            newsAdapter = NewsListRecyclerAdapter(object : NewsListRecyclerAdapter.OnItemClickListener{
-
-                override fun click(article: Article) {
-
-                }
-            })
+            newsAdapter =
+                NewsListRecyclerAdapter(object : NewsListRecyclerAdapter.OnItemClickListener {
+                    override fun click(article: Article) {
+                        (requireActivity() as MainActivity).launchDetailsFragment(article)
+                    }
+                })
             //Присваиваем адаптер
             adapter = newsAdapter
             //Присвои layoutmanager

@@ -32,5 +32,5 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
         })
     }
 
-    fun getFilmsFromDB(): List<Article> = repo.getAllFromDB()
+    fun getNewsFromDB(): List<Article> = repo.getAllFromDB()
 }

@@ -29,7 +29,7 @@ class HomeFragmentViewModel : ViewModel() {
 
             override fun onFailure() {
                 Executors.newSingleThreadExecutor().execute {
-                    newsListLiveData.postValue(interactor.getFilmsFromDB())
+                    newsListLiveData.postValue(interactor.getNewsFromDB())
                 }
             }
         })

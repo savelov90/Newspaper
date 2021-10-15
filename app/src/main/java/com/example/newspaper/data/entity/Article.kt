@@ -11,9 +11,10 @@ import kotlinx.parcelize.Parcelize
 data class Article(
     //val author: String,
    // val content: String,
-    //val description: String,
+
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
         @ColumnInfo(name = "date") val publishedAt: String,
+        @ColumnInfo(name = "desc") val description: String,
         @Embedded val source: @RawValue Source,
         @ColumnInfo(name = "title") val title: String,
     //val url: String,
