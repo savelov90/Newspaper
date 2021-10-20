@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_sharp_home_24"
         android:title="@string/menu_home_title_text"/>
     <item
-        android:id="@+id/news_new"
+        android:id="@+id/favorite"
         android:icon="@drawable/ic_sharp_favorite_border_24"
         android:title="@string/menu_favorites_title"
         app:showAsAction="withText"/>

@@ -18,10 +18,20 @@ class MainRepository(private val newsDao: NewsDao) {
         return newsDao.getCachedFilms()
     }
 
-    fun putToDb(articleFavorite: ArticleFavorite) {
+    fun putToFav(articleFavorite: ArticleFavorite) {
         Executors.newSingleThreadExecutor().execute {
             newsDao.insertFav(articleFavorite)
         }
+    }
+
+    fun deleteFromFav(articleFavorite: ArticleFavorite) {
+        Executors.newSingleThreadExecutor().execute {
+            newsDao.deleteFav(articleFavorite)
+        }
+    }
+
+    fun getAllFromFav(): List<ArticleFavorite> {
+        return newsDao.getFav()
     }
 
 }

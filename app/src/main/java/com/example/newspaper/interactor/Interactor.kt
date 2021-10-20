@@ -2,6 +2,7 @@ package com.example.newspaper.interactor
 
 import com.example.newspaper.data.MainRepository
 import com.example.newspaper.data.NewsApi
+import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.data.db_first.entity.NewsData
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
@@ -33,4 +34,8 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     }
 
     fun getNewsFromDB(): List<Article> = repo.getAllFromDB()
+
+    fun getNewsFromFav(): List<ArticleFavorite> = repo.getAllFromFav()
+    fun putNewsToFav(articleFavorite: ArticleFavorite) = repo.putToFav(articleFavorite)
+    fun deleteNewsFromFav(articleFavorite: ArticleFavorite) = repo.deleteFromFav(articleFavorite)
 }

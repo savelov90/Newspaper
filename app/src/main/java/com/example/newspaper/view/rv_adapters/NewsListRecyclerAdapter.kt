@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newspaper.R
+import com.example.newspaper.data.db_fav.ArticleAbstract
+import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.view.rv_viewholders.NewsViewHolder
 
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity
 class NewsListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
-    private val items = mutableListOf<Article>()
+    private val items = mutableListOf<ArticleAbstract>()
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
     override fun getItemCount() = items.size
@@ -35,7 +37,7 @@ class NewsListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
     }
 
     //Метод для добавления объектов в наш список
-    fun addItems(list: List<Article>) {
+    fun addItems(list: List<ArticleAbstract>) {
         //Сначала очищаем(если не реализовать DiffUtils)
         items.clear()
         //Добавляем
@@ -47,6 +49,6 @@ class NewsListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
 
     //Интерфейс для обработки кликов
     interface OnItemClickListener {
-        fun click(article: Article)
+        fun click(article: ArticleAbstract)
     }
 }

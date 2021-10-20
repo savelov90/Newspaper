@@ -3,6 +3,7 @@ package com.example.newspaper.view.rv_viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.NewsItemBinding
 
@@ -17,7 +18,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val picture =  newsItemBinding.picture
 
     //В этом методе кладем данные из Article в наши view
-    fun bind(article: Article) {
+    fun bind(article: ArticleAbstract) {
         //Устанавливаем заголовок
         title.text = article.title
         //Устанавливаем постер

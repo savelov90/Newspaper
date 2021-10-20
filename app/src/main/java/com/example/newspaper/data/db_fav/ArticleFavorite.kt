@@ -11,12 +11,12 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "fav_news", indices = [Index(value = ["title"], unique = true)])
 
 data class ArticleFavorite (
-            @PrimaryKey(autoGenerate = true) val id: Int = 0,
-            @ColumnInfo(name = "date") val publishedAt: String,
-            @ColumnInfo(name = "desc") val description: String,
-            @Embedded val source: @RawValue Source,
-            @ColumnInfo(name = "title") val title: String,
+    @PrimaryKey(autoGenerate = true) override var id: Int = 0,
+    @ColumnInfo(name = "date") override var publishedAt: String,
+    @ColumnInfo(name = "desc") override var description: String,
+    @Embedded override var source: @RawValue Source,
+    @ColumnInfo(name = "title") override var title: String,
             //val url: String,
-            @ColumnInfo(name = "picture_path") val urlToImage: String,
-            var isInFavorites: Boolean = false
-    ) : Parcelable
+    @ColumnInfo(name = "picture_path") override var urlToImage: String,
+    @ColumnInfo(name = "favorite") override var isInFavorites: Boolean = false
+    ) : ArticleAbstract(), Parcelable
