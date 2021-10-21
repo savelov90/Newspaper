@@ -1,5 +1,6 @@
 package com.example.newspaper.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
@@ -11,27 +12,25 @@ import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
 
-    val newsListLiveData = MutableLiveData<List<Article>>()
+    val newsListLiveData: LiveData<List<Article>>
     //Инициализируем интерактор
     @Inject
     lateinit var interactor: Interactor
 
     init {
         App.instance.dagger.inject(this)
+        newsListLiveData = interactor.getNewsFromDB()
         getNews()
     }
 
     fun getNews() {
         interactor.getNewsFromApi(object : ApiCallback {
-            override fun onSuccess(article: List<Article>) {
-                newsListLiveData.postValue(article)
+            override fun onSuccess() {
+
             }
 
             override fun onFailure() {
-                Executors.newSingleThreadExecutor().execute {
-                    println("Hello Home View Model")
-                    newsListLiveData.postValue(interactor.getNewsFromDB())
-                }
+
             }
         })
     }
@@ -39,7 +38,7 @@ class HomeFragmentViewModel : ViewModel() {
 
 
     interface ApiCallback {
-        fun onSuccess(article: List<Article>)
         fun onFailure()
-        }
+        fun onSuccess()
+    }
 }

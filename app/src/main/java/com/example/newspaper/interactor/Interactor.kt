@@ -1,5 +1,6 @@
 package com.example.newspaper.interactor
 
+import androidx.lifecycle.LiveData
 import com.example.newspaper.data.MainRepository
 import com.example.newspaper.data.NewsApi
 import com.example.newspaper.data.db_fav.ArticleFavorite
@@ -21,9 +22,9 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
                 list?.forEach {
                     repo.putToDb(list)
                 }
-                if (list != null) {
-                    callback.onSuccess(list)
-                }
+
+                    callback.onSuccess()
+
             }
 
             override fun onFailure(call: Call<NewsData>, t: Throwable) {
@@ -33,7 +34,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
         })
     }
 
-    fun getNewsFromDB(): List<Article> = repo.getAllFromDB()
+    fun getNewsFromDB(): LiveData<List<Article>> = repo.getAllFromDB()
 
     fun getNewsFromFav(): List<ArticleFavorite> = repo.getAllFromFav()
     fun putNewsToFav(articleFavorite: ArticleFavorite) = repo.putToFav(articleFavorite)

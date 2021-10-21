@@ -1,5 +1,6 @@
 package com.example.newspaper.data
 
+import androidx.lifecycle.LiveData
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.dao.NewsDao
 import com.example.newspaper.data.db_first.entity.Article
@@ -14,9 +15,8 @@ class MainRepository(private val newsDao: NewsDao) {
         }
     }
 
-    fun getAllFromDB(): List<Article> {
-        return newsDao.getCachedFilms()
-    }
+    fun getAllFromDB(): LiveData<List<Article>> = newsDao.getCachedNews()
+
 
     fun putToFav(articleFavorite: ArticleFavorite) {
         Executors.newSingleThreadExecutor().execute {

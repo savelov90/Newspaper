@@ -63,8 +63,9 @@ class HomeFragment : Fragment() {
 
         viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
             newsDataBase = it
+            newsAdapter.addItems(it)
         })
-        newsAdapter.addItems(newsDataBase)
+
 
 
     }
@@ -89,6 +90,10 @@ class HomeFragment : Fragment() {
             addItemDecoration(decorator)
         }
 
+        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
+            newsDataBase = it
+            newsAdapter.addItems(it)
+        })
 
     }
 
