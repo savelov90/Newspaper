@@ -20,7 +20,7 @@ import com.example.newspaper.viewmodel.HomeFragmentViewModel
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var article: ArticleAbstract
+    private lateinit var articleAbstract: ArticleAbstract
     private lateinit var articleFavorite: ArticleFavorite
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsFragmentViewModel::class.java)
@@ -41,7 +41,9 @@ class DetailsFragment : Fragment() {
 
         setFilmsDetails()
 
-        articleFavorite = getArticleFavorite(article)
+        articleFavorite = getArticleFavorite(articleAbstract)
+
+        println("!!! + $articleFavorite")
 
         binding.detailsFabFavorites.setOnClickListener {
             if (!articleFavorite.isInFavorites) {
@@ -58,13 +60,13 @@ class DetailsFragment : Fragment() {
 
     private fun getArticleFavorite(articleAbstract: ArticleAbstract): ArticleFavorite {
         var articleFavorite = ArticleFavorite(
-            id = article.id,
-            publishedAt = article.publishedAt,
-            description = article.description,
-            source = article.source,
-            title = article.title,
-            urlToImage = article.urlToImage,
-            isInFavorites = article.isInFavorites
+            id = articleAbstract.id,
+            publishedAt = articleAbstract.publishedAt,
+            description = articleAbstract.description,
+            source = articleAbstract.source,
+            title = articleAbstract.title,
+            urlToImage = articleAbstract.urlToImage,
+            isInFavorites = articleAbstract.isInFavorites
             )
 
         return articleFavorite
@@ -72,20 +74,20 @@ class DetailsFragment : Fragment() {
 
     private fun setFilmsDetails() {
         //Получаем наш фильм из переданного бандла
-        article = arguments?.get("article") as ArticleAbstract
+        articleAbstract = arguments?.get("article") as ArticleAbstract
 
         //Устанавливаем заголовок
-        binding.detailsTitle.text = article.title
+        binding.detailsTitle.text = articleAbstract.title
         //Устанавливаем картинку
         Glide.with(this)
-            .load(article.urlToImage)
+            .load(articleAbstract.urlToImage)
             .centerCrop()
             .into(binding.detailsPoster)
         //Устанавливаем описание
-        binding.detailsDescription.text = article.description
+        binding.detailsDescription.text = articleAbstract.description
 
         binding.detailsFabFavorites.setImageResource(
-            if (article.isInFavorites) R.drawable.ic_sharp_favorite_24
+            if (articleAbstract.isInFavorites) R.drawable.ic_sharp_favorite_24
             else R.drawable.ic_sharp_favorite_border_24
         )
     }

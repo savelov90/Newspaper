@@ -29,11 +29,14 @@ class HomeFragmentViewModel : ViewModel() {
 
             override fun onFailure() {
                 Executors.newSingleThreadExecutor().execute {
+                    println("Hello Home View Model")
                     newsListLiveData.postValue(interactor.getNewsFromDB())
                 }
             }
         })
     }
+
+
 
     interface ApiCallback {
         fun onSuccess(article: List<Article>)

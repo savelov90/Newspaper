@@ -55,6 +55,12 @@ class FavoritesFragment : Fragment() {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
         initFav()
+
+        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<ArticleFavorite>> {
+            newsDataBase = it
+        })
+        newsAdapter.addItems(newsDataBase)
+        println("Hello Fav fragment")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +72,7 @@ class FavoritesFragment : Fragment() {
             newsDataBase = it
         })
         newsAdapter.addItems(newsDataBase)
+        println("Hello Fav fragment")
 
     }
 
