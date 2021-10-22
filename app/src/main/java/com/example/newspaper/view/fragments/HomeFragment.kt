@@ -15,6 +15,8 @@ import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 @Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
@@ -51,7 +53,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-        initRecyckler()
+
 
 
     }
@@ -61,13 +63,12 @@ class HomeFragment : Fragment() {
 
         initRecyckler()
 
-        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
-            newsDataBase = it
-            newsAdapter.addItems(it)
-        })
-
-
-
+        viewModel.newsListData
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list ->
+                    newsAdapter.addItems(list)
+                }
     }
 
     private fun initRecyckler() {
@@ -90,10 +91,6 @@ class HomeFragment : Fragment() {
             addItemDecoration(decorator)
         }
 
-        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<Article>> {
-            newsDataBase = it
-            newsAdapter.addItems(it)
-        })
 
     }
 

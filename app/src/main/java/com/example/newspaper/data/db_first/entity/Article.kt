@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-@Entity(tableName = "cached_news", indices = [Index(value = ["title"], unique = true)])
+@Entity(tableName = "cach_news", indices = [Index(value = ["title"], unique = true)])
 data class Article(
         @PrimaryKey(autoGenerate = true) override var id: Int = 0,
         @ColumnInfo(name = "date") override var publishedAt: String,

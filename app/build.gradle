@@ -86,9 +86,11 @@ dependencies {
 
 
 //Room
-    def room_version = "2.2.6"
+    def room_version = "2.3.0-beta02"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava3:2.3.0-beta02"
     kapt "androidx.room:room-compiler:$room_version"
+
 
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
@@ -98,7 +100,4 @@ dependencies {
 //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
-
-    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
-    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
 }

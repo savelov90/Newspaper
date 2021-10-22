@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.dao.NewsDao
 import com.example.newspaper.data.db_first.entity.Article
+import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.Executors
 
 class MainRepository(private val newsDao: NewsDao) {
@@ -15,7 +16,7 @@ class MainRepository(private val newsDao: NewsDao) {
         }
     }
 
-    fun getAllFromDB(): LiveData<List<Article>> = newsDao.getCachedNews()
+    fun getAllFromDB(): Observable<List<Article>> = newsDao.getCachedNews()
 
 
     fun putToFav(articleFavorite: ArticleFavorite) {

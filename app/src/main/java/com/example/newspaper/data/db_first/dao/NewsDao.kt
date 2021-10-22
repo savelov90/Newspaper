@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
+import io.reactivex.rxjava3.core.Observable
 
 //Помечаем, что это не просто интерфейс, а Dao-объект
 @Dao
@@ -11,11 +12,12 @@ interface NewsDao {
 
     //RETROFIT и HomeFragment - сохранение последних новостей на случай медленного интернета
     //Запрос на всю таблицу
-    @Query("SELECT * FROM cached_news")
-    fun getCachedNews(): LiveData<List<Article>>
+    @Query("SELECT * FROM cach_news")
+    fun getCachedNews(): Observable<List<Article>>
     //Кладём списком в БД, в случае конфликта перезаписываем
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<Article>)
+
 
     //ИЗБРАННОЕ - управление БД избранного
     //Кладём элемент избранного в БД, в случае конфликта перезаписываем
