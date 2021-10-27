@@ -27,6 +27,8 @@ interface NewsDao {
     @Delete
     fun deleteFav(articleFavorite: ArticleFavorite)
     @Query("SELECT * FROM fav_news")
-    fun getFav(): List<ArticleFavorite>
+    fun getFav(): Observable<List<ArticleFavorite>>
 
+    @Query("SELECT * FROM fav_news WHERE title LIKE :search")
+    fun checkFav(search: String): ArticleFavorite
 }

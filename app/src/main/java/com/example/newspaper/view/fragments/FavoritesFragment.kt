@@ -19,6 +19,8 @@ import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.FavoritesFragmentViewModel
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 class FavoritesFragment : Fragment() {
@@ -31,17 +33,6 @@ class FavoritesFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(FavoritesFragmentViewModel::class.java)
     }
 
-    private var newsDataBase = listOf<ArticleFavorite>()
-
-        //Используем backing field
-        set(value) {
-            //Если придет такое же значение то мы выходим из метода
-            if (field == value) return
-            //Если прило другое значение, то кладем его в переменную
-            field = value
-            //Обновляем RV адаптер
-            newsAdapter.addItems(field)
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,13 +45,7 @@ class FavoritesFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
-        initFav()
 
-        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<ArticleFavorite>> {
-            newsDataBase = it
-        })
-        newsAdapter.addItems(newsDataBase)
-        println("Hello Fav fragment")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,12 +53,12 @@ class FavoritesFragment : Fragment() {
 
         initFav()
 
-        viewModel.newsListLiveData.observe(viewLifecycleOwner, Observer<List<ArticleFavorite>> {
-            newsDataBase = it
-        })
-        newsAdapter.addItems(newsDataBase)
-        println("Hello Fav fragment")
-
+        viewModel.newsListData
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list ->
+                    newsAdapter.addItems(list)
+                }
     }
 
 

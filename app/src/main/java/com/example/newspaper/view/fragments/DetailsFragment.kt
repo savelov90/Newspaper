@@ -43,7 +43,7 @@ class DetailsFragment : Fragment() {
 
         articleFavorite = getArticleFavorite(articleAbstract)
 
-        println("!!! + $articleFavorite")
+        val check = articleAbstract.title
 
         binding.detailsFabFavorites.setOnClickListener {
             if (!articleFavorite.isInFavorites) {

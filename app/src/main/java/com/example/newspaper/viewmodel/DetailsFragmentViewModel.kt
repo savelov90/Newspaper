@@ -29,4 +29,8 @@ class DetailsFragmentViewModel : ViewModel() {
     fun delFav(articleFavorite: ArticleFavorite) {
         interactor.deleteNewsFromFav(articleFavorite)
     }
+
+    fun checkFav(search: String) {
+        interactor.checkFav(search)
+    }
 }

@@ -42,7 +42,8 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
 
     fun getNewsFromDB(): Observable<List<Article>> = repo.getAllFromDB()
 
-    fun getNewsFromFav(): List<ArticleFavorite> = repo.getAllFromFav()
+    fun getNewsFromFav(): Observable<List<ArticleFavorite>> = repo.getAllFromFav()
     fun putNewsToFav(articleFavorite: ArticleFavorite) = repo.putToFav(articleFavorite)
     fun deleteNewsFromFav(articleFavorite: ArticleFavorite) = repo.deleteFromFav(articleFavorite)
+    fun checkFav(search: String) : ArticleFavorite = repo.checkFav(search)
 }

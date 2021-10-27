@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.interactor.Interactor
+import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
 class FavoritesFragmentViewModel : ViewModel() {
 
-    val newsListLiveData = MutableLiveData<List<ArticleFavorite>>()
+    val newsListData: Observable<List<ArticleFavorite>>
     //Инициализируем интерактор
     @Inject
     lateinit var interactor: Interactor
@@ -19,11 +20,10 @@ class FavoritesFragmentViewModel : ViewModel() {
     init {
         App.instance.dagger.inject(this)
         getNews()
+        newsListData = interactor.getNewsFromFav()
     }
 
     fun getNews() {
-        Executors.newSingleThreadExecutor().execute {
-            newsListLiveData.postValue(interactor.getNewsFromFav())
-        }
+           interactor.getNewsFromFav()
     }
 }
