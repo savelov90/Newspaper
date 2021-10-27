@@ -43,10 +43,11 @@ class DetailsFragment : Fragment() {
 
         articleFavorite = getArticleFavorite(articleAbstract)
 
-        val check = articleAbstract.title
+        val checkParam = articleAbstract.title
+        val checkArticle = viewModel.checkFav(checkParam)
 
         binding.detailsFabFavorites.setOnClickListener {
-            if (!articleFavorite.isInFavorites) {
+            if (checkArticle == null) {
                 binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
                 articleFavorite.isInFavorites = true
                 viewModel.putFav(articleFavorite)

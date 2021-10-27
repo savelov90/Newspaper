@@ -31,6 +31,7 @@ class DetailsFragmentViewModel : ViewModel() {
     }
 
     fun checkFav(search: String) {
+
         interactor.checkFav(search)
     }
 }
