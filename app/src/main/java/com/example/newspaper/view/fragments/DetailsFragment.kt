@@ -15,6 +15,9 @@ import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentDetailsBinding
 import com.example.newspaper.viewmodel.DetailsFragmentViewModel
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 class DetailsFragment : Fragment() {
@@ -22,6 +25,8 @@ class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var articleAbstract: ArticleAbstract
     private lateinit var articleFavorite: ArticleFavorite
+    private lateinit var checkArticle: Observable<ArticleFavorite>
+    private lateinit var result: ArticleFavorite
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsFragmentViewModel::class.java)
     }
@@ -44,10 +49,23 @@ class DetailsFragment : Fragment() {
         articleFavorite = getArticleFavorite(articleAbstract)
 
         val checkParam = articleAbstract.title
-        val checkArticle = viewModel.checkFav(checkParam)
+        checkArticle = viewModel.checkFav(checkParam)
+        checkArticle
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { art ->
+                    result = art
+                    binding.detailsFabFavorites.setImageResource(
+                            if (result.title != null) R.drawable.ic_sharp_favorite_24
+                            else R.drawable.ic_sharp_favorite_border_24
+                    )
+                }
+
+
+
 
         binding.detailsFabFavorites.setOnClickListener {
-            if (checkArticle == null) {
+            if (!articleFavorite.isInFavorites) {
                 binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
                 articleFavorite.isInFavorites = true
                 viewModel.putFav(articleFavorite)
@@ -87,10 +105,7 @@ class DetailsFragment : Fragment() {
         //Устанавливаем описание
         binding.detailsDescription.text = articleAbstract.description
 
-        binding.detailsFabFavorites.setImageResource(
-            if (articleAbstract.isInFavorites) R.drawable.ic_sharp_favorite_24
-            else R.drawable.ic_sharp_favorite_border_24
-        )
+
     }
 
 

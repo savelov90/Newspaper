@@ -30,5 +30,5 @@ interface NewsDao {
     fun getFav(): Observable<List<ArticleFavorite>>
 
     @Query("SELECT * FROM fav_news WHERE title LIKE :search")
-    fun checkFav(search: String): ArticleFavorite
+    fun checkFav(search: String): Observable<ArticleFavorite>
 }

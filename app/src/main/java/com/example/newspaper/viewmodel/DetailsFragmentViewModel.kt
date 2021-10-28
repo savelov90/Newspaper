@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.interactor.Interactor
+import io.reactivex.rxjava3.core.Observable
 import java.net.URL
+import java.util.concurrent.Executors
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -30,8 +32,6 @@ class DetailsFragmentViewModel : ViewModel() {
         interactor.deleteNewsFromFav(articleFavorite)
     }
 
-    fun checkFav(search: String) {
+    fun checkFav(search: String) : Observable<ArticleFavorite> = interactor.checkFav(search)
 
-        interactor.checkFav(search)
-    }
 }
