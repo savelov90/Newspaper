@@ -6,6 +6,7 @@ import com.example.newspaper.di.modules.RemoteModule
 import com.example.newspaper.viewmodel.DetailsFragmentViewModel
 import com.example.newspaper.viewmodel.FavoritesFragmentViewModel
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
+import com.example.newspaper.viewmodel.SettingsFragmentViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -24,4 +25,5 @@ interface AppComponent {
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
     fun inject(detailsFragmentViewModel: DetailsFragmentViewModel)
     fun inject(favoritesFragmentViewModel: FavoritesFragmentViewModel)
+    fun inject(settingsFragmentViewModel: SettingsFragmentViewModel)
 }

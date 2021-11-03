@@ -11,6 +11,7 @@ import com.example.newspaper.databinding.ActivityMainBinding
 import com.example.newspaper.view.fragments.DetailsFragment
 import com.example.newspaper.view.fragments.FavoritesFragment
 import com.example.newspaper.view.fragments.HomeFragment
+import com.example.newspaper.view.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.settings -> {
                     val tag = "settings"
                     val fragment = checkFragmentExistence(tag)
-                   // changeFragment( fragment?: SettingsFragment(), tag)
+                    changeFragment( fragment?: SettingsFragment(), tag)
                     true
                 }
                 else -> false

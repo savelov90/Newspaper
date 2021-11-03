@@ -12,7 +12,7 @@ import com.example.newspaper.view.rv_viewholders.NewsViewHolder
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity
 class NewsListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
-    private val items = mutableListOf<ArticleAbstract>()
+    val items = mutableListOf<ArticleAbstract>()
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
     override fun getItemCount() = items.size

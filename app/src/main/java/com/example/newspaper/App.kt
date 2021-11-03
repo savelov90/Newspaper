@@ -18,8 +18,8 @@ class App : Application() {
         instance = this
         dagger = DaggerAppComponent.builder()
             .remoteModule(RemoteModule())
-            .databaseModule(DatabaseModule(this))
-            .domainModule(DomainModule())
+            .databaseModule(DatabaseModule())
+            .domainModule(DomainModule(this))
             .build()
     }
 

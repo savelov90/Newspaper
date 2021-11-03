@@ -4,4 +4,10 @@
     <string name="menu_favorites_title">Новое</string>
     <string name="menu_watch_later_title">Настройки</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_settings_title_text">Настройки</string>
+    <string name="radio_button_us">США (English)</string>
+    <string name="radio_button_ru">Россия (Русский)</string>
+    <string name="radio_button_ua">Украина (Украiнська мова)</string>
+    <string name="radio_group_header">Страна и язык:</string>
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/settings_fragment_root"
+    android:background="@color/prime"
+    tools:context=".view.fragments.SettingsFragment">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@android:color/white"
+            android:layout_margin="8dp"
+            android:text="@string/radio_group_header"/>
+
+        <RadioButton
+            android:id="@+id/radio_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@android:color/white"
+            android:text="@string/radio_button_us"/>
+        <RadioButton
+            android:id="@+id/radio_ru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@android:color/white"
+            android:text="@string/radio_button_ru"/>
+        <RadioButton
+            android:id="@+id/radio_ua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@android:color/white"
+            android:text="@string/radio_button_ua"/>
+
+    </RadioGroup>
+</FrameLayout>

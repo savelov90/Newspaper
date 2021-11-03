@@ -10,12 +10,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule(val context: Context) {
-
-    @Singleton
-    @Provides
-    fun provideContext() = context
-
+class DatabaseModule {
 
     @Singleton
     @Provides

@@ -31,7 +31,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 //Указываем ImageView, куда будем загружать изображение
                 .into(picture)
         //Устанавливаем описание
-        source.text = article.source.name
+        source.text = article.author
         time.text = article.publishedAt
 
     }

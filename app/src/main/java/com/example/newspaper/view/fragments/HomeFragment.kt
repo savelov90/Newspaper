@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPullToRefresh()
         initRecyckler()
 
         viewModel.newsListData
@@ -78,8 +79,18 @@ class HomeFragment : Fragment() {
             val decorator = TopSpacingItemDecoration(10)
             addItemDecoration(decorator)
         }
+    }
 
-
+    private fun initPullToRefresh() {
+        //Вешаем слушатель, чтобы вызвался pull to refresh
+        binding.pullToRefresh.setOnRefreshListener {
+            //Чистим адаптер(items нужно будет сделать паблик или создать для этого публичный метод)
+            newsAdapter.items.clear()
+            //Делаем новый запрос фильмов на сервер
+            viewModel.getNews()
+            //Убираем крутящееся колечко
+            binding.pullToRefresh.isRefreshing = false
+        }
     }
 
 

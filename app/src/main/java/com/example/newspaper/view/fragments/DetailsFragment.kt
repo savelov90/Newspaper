@@ -35,7 +35,7 @@ class DetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -78,14 +78,14 @@ class DetailsFragment : Fragment() {
     }
 
     private fun getArticleFavorite(articleAbstract: ArticleAbstract): ArticleFavorite {
-        var articleFavorite = ArticleFavorite(
+        val articleFavorite = ArticleFavorite(
             id = articleAbstract.id,
             publishedAt = articleAbstract.publishedAt,
             description = articleAbstract.description,
-            source = articleAbstract.source,
             title = articleAbstract.title,
             urlToImage = articleAbstract.urlToImage,
-            isInFavorites = articleAbstract.isInFavorites
+            isInFavorites = articleAbstract.isInFavorites,
+            author = articleAbstract.author
             )
 
         return articleFavorite
