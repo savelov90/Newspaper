@@ -23,6 +23,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         title.text = article.title
         //Устанавливаем постер
         //Указываем контейнер, в которм будет "жить" наша картинка
+
         Glide.with(itemView)
                 //Загружаем сам ресурс
                 .load(article.urlToImage)

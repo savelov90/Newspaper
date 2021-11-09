@@ -10,4 +10,6 @@
     <string name="radio_button_ru">Россия (Русский)</string>
     <string name="radio_button_ua">Украина (Украiнська мова)</string>
     <string name="radio_group_header">Страна и язык:</string>
+
+    <string name="advert">https://cdn1.ozone.ru/s3/multimedia-3/c1200/6101254683.jpg</string>
 </resources>

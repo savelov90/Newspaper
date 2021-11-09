@@ -1,45 +1,34 @@
 package com.example.newspaper.interactor
 
-import androidx.lifecycle.LiveData
+
 import com.example.newspaper.data.ApiConstants
 import com.example.newspaper.data.MainRepository
 import com.example.newspaper.data.NewsApi
 import com.example.newspaper.data.Preference.PreferenceProvider
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
-import com.example.newspaper.data.db_first.entity.NewsData
-import com.example.newspaper.viewmodel.HomeFragmentViewModel
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.rxjava3.kotlin.subscribeBy
+
 
 class Interactor(private val repo: MainRepository, private val retrofitService: NewsApi, private val preferences: PreferenceProvider) {
     //В конструктор мы будем передавать коллбэк из вью модели, чтобы реагировать на то, когда фильмы будут получены
     //и страницу, которую нужно загрузить (это для пагинации)
     fun getNewsFromApi() {
-        retrofitService.getNews(getDefaultLangFromPreferences(), ApiConstants.API_KEY).enqueue(object : Callback<NewsData> {
-            override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
-                //При успехе мы вызываем метод передаем onSuccess и в этот коллбэк список фильмов
-               val list = response.body()?.articles
-                //Кладем фильмы в бд
-                //В случае успешного ответа кладем фильмы в БД и выключаем ProgressBar
-                Completable.fromSingle<List<Article>> {
-                    if (list != null) {
-                        repo.putToDb(list)
-                    }
-                }
-                        .subscribeOn(Schedulers.io())
-                        .subscribe()
-            }
+        retrofitService.getNews(getDefaultLangFromPreferences(), ApiConstants.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .map {
+                    it.articles }
+                .subscribeBy(
+                        onError = {
 
-            override fun onFailure(call: Call<NewsData>, t: Throwable) {
-                //В случае провала вызываем другой метод коллбека
+                        },
+                        onNext = {
+                            repo.putToDb(it)
+                        }
+                )
 
-            }
-        })
     }
 
     fun getNewsFromDB(): Observable<List<Article>> = repo.getAllFromDB()

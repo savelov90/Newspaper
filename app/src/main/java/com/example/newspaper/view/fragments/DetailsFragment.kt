@@ -13,6 +13,8 @@ import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentDetailsBinding
+import com.example.newspaper.disposable.AutoDisposable
+import com.example.newspaper.disposable.addTo
 import com.example.newspaper.viewmodel.DetailsFragmentViewModel
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -30,7 +32,15 @@ class DetailsFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsFragmentViewModel::class.java)
     }
+    private val autoDisposable = AutoDisposable()
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        autoDisposable.bindTo(lifecycle)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +71,7 @@ class DetailsFragment : Fragment() {
                     )
                     articleAbstract.isInFavorites = result.title == articleAbstract.title
                 }
+                .addTo(autoDisposable)
 
 
 
@@ -69,10 +80,12 @@ class DetailsFragment : Fragment() {
             if (!articleAbstract.isInFavorites) {
                 binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
                 articleFavorite.isInFavorites = true
+                articleAbstract.isInFavorites = true
                 viewModel.putFav(articleFavorite)
             } else {
                 binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_border_24)
                 articleFavorite.isInFavorites = false
+                articleAbstract.isInFavorites = false
                 viewModel.delFav(articleFavorite)
             }
         }

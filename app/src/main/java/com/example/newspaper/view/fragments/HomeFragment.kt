@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentHomeBinding
+import com.example.newspaper.disposable.AutoDisposable
+import com.example.newspaper.disposable.addTo
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
@@ -23,6 +25,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var newsAdapter: NewsListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
+    private val autoDisposable = AutoDisposable()
 
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
@@ -31,7 +34,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-
+        autoDisposable.bindTo(lifecycle)
 
     }
 
@@ -58,6 +61,7 @@ class HomeFragment : Fragment() {
                 .subscribe { list ->
                     newsAdapter.addItems(list)
                 }
+                .addTo(autoDisposable)
     }
 
     private fun initRecyckler() {

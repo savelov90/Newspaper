@@ -14,6 +14,8 @@ import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentFavoritesBinding
 import com.example.newspaper.databinding.FragmentHomeBinding
+import com.example.newspaper.disposable.AutoDisposable
+import com.example.newspaper.disposable.addTo
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
@@ -28,6 +30,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var newsAdapter: NewsListRecyclerAdapter
     private lateinit var binding: FragmentFavoritesBinding
+    private val autoDisposable = AutoDisposable()
 
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(FavoritesFragmentViewModel::class.java)
@@ -37,6 +40,7 @@ class FavoritesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        autoDisposable.bindTo(lifecycle)
 
     }
 
@@ -59,6 +63,7 @@ class FavoritesFragment : Fragment() {
                 .subscribe { list ->
                     newsAdapter.addItems(list)
                 }
+                .addTo(autoDisposable)
     }
 
 
