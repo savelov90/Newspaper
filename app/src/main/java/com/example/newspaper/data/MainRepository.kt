@@ -18,6 +18,8 @@ class MainRepository(private val newsDao: NewsDao) {
 
     fun getAllFromDB(): Observable<List<Article>> = newsDao.getCachedNews()
 
+    fun deleteAll(): Int = newsDao.deleteAll()
+
 
     fun putToFav(articleFavorite: ArticleFavorite) {
         Executors.newSingleThreadExecutor().execute {

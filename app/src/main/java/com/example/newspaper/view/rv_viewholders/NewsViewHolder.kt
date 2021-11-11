@@ -1,11 +1,12 @@
 package com.example.newspaper.view.rv_viewholders
 
+import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newspaper.data.db_fav.ArticleAbstract
-import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.NewsItemBinding
+
 
 //В конструктор класс передается layout, который мы создали(film_item.xml)
 class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,12 +26,15 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //Указываем контейнер, в которм будет "жить" наша картинка
 
         Glide.with(itemView)
-                //Загружаем сам ресурс
-                .load(article.urlToImage)
-                //Центруем изображение
-                .centerCrop()
-                //Указываем ImageView, куда будем загружать изображение
-                .into(picture)
+            //Загружаем сам ресурс
+            .load(Uri.parse(article.urlToImage))
+            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+            .error(android.R.drawable.stat_notify_error)
+            //Центруем изображение
+            .centerCrop()
+            //Указываем ImageView, куда будем загружать изображение
+            .into(picture)
+
         //Устанавливаем описание
         source.text = article.author
         time.text = article.publishedAt

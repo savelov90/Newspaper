@@ -10,25 +10,33 @@ import com.example.newspaper.data.db_first.entity.Article
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import java.util.concurrent.Executors
 
 
 class Interactor(private val repo: MainRepository, private val retrofitService: NewsApi, private val preferences: PreferenceProvider) {
     //В конструктор мы будем передавать коллбэк из вью модели, чтобы реагировать на то, когда фильмы будут получены
     //и страницу, которую нужно загрузить (это для пагинации)
+
+
     fun getNewsFromApi() {
+
+        Executors.newSingleThreadExecutor().execute {
+            repo.deleteAll()
+        }
+
         retrofitService.getNews(getDefaultLangFromPreferences(), ApiConstants.API_KEY)
-                .subscribeOn(Schedulers.io())
-                .map {
-                    it.articles }
-                .subscribeBy(
-                        onError = {
+                    .subscribeOn(Schedulers.io())
+                    .map {
+                        it.articles
+                    }
+                    .subscribeBy(
+                            onError = {
 
-                        },
-                        onNext = {
-                            repo.putToDb(it)
-                        }
-                )
-
+                            },
+                            onNext = {
+                                repo.putToDb(it)
+                            }
+                    )
     }
 
     fun getNewsFromDB(): Observable<List<Article>> = repo.getAllFromDB()

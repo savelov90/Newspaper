@@ -5,22 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_fav.ArticleFavorite
-import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentFavoritesBinding
-import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.FavoritesFragmentViewModel
-import com.example.newspaper.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 

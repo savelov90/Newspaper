@@ -18,6 +18,9 @@ interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<Article>)
 
+    @Query("DELETE FROM cach_news")
+    fun deleteAll(): Int
+
 
     //ИЗБРАННОЕ - управление БД избранного
     //Кладём элемент избранного в БД, в случае конфликта перезаписываем
