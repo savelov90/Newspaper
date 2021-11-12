@@ -39,6 +39,7 @@ class SettingsFragment : Fragment() {
         })
         //Слушатель для отправки нового состояния в настройки
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            viewModel.deleteNews()
             when(checkedId) {
                 R.id.radio_us -> viewModel.putCategoryProperty(LANG_US)
                 R.id.radio_ru -> viewModel.putCategoryProperty(LANG_RU)

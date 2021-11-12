@@ -63,6 +63,11 @@ class HomeFragment : Fragment() {
                 .addTo(autoDisposable)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNews()
+    }
+
     private fun initRecyckler() {
         //находим наш RV
         binding.mainRecycler.apply {

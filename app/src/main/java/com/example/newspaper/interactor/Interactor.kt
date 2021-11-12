@@ -20,10 +20,6 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
 
     fun getNewsFromApi() {
 
-        Executors.newSingleThreadExecutor().execute {
-            repo.deleteAll()
-        }
-
         retrofitService.getNews(getDefaultLangFromPreferences(), ApiConstants.API_KEY)
                     .subscribeOn(Schedulers.io())
                     .map {
@@ -40,6 +36,8 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     }
 
     fun getNewsFromDB(): Observable<List<Article>> = repo.getAllFromDB()
+
+    fun deleteAll() = repo.deleteAll()
 
     fun getNewsFromFav(): Observable<List<ArticleFavorite>> = repo.getAllFromFav()
     fun putNewsToFav(articleFavorite: ArticleFavorite) = repo.putToFav(articleFavorite)

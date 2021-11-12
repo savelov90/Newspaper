@@ -19,7 +19,7 @@ interface NewsDao {
     fun insertAll(list: List<Article>)
 
     @Query("DELETE FROM cach_news")
-    fun deleteAll(): Int
+    fun deleteAll()
 
 
     //ИЗБРАННОЕ - управление БД избранного
