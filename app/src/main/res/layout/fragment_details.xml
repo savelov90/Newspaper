@@ -57,11 +57,11 @@
         android:id="@+id/details_fab_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="80dp"
         android:backgroundTint="@color/white"
         app:borderWidth="0dp"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="left|bottom"
+        app:layout_anchorGravity="right|bottom"
         app:srcCompat="@drawable/ic_sharp_favorite_border_24"
         app:tint="@android:color/holo_red_dark" />
 
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginTop="100dp">
+        android:paddingTop="150dp">
 
         <TextView
             android:id="@+id/details_description"
@@ -98,7 +98,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
             tools:text="@tools:sample/lorem/random" />
 
     </androidx.core.widget.NestedScrollView>

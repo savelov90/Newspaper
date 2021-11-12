@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
 import com.example.newspaper.interactor.Interactor
+import io.reactivex.rxjava3.core.Completable
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -24,11 +25,13 @@ class SettingsFragmentViewModel : ViewModel() {
         categoryPropertyLifeData.value = interactor.getDefaultLangFromPreferences()
     }
 
-    fun deleteNews() {
-        Executors.newSingleThreadExecutor().execute {
-            interactor.deleteAll()
-        }
+    fun deleteNews(): Completable {
+            return  Completable.create {  subscriber ->
+                interactor.deleteAll()
+                subscriber.onComplete()
+            }
     }
+
 
     fun putCategoryProperty(category: String) {
         //Сохраняем в настройки

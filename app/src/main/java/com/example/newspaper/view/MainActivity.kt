@@ -13,6 +13,7 @@ import com.example.newspaper.view.fragments.FavoritesFragment
 import com.example.newspaper.view.fragments.HomeFragment
 import com.example.newspaper.view.fragments.SettingsFragment
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

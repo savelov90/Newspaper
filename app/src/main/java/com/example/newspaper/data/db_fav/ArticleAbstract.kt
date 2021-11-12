@@ -11,7 +11,8 @@ abstract class ArticleAbstract : Parcelable {
     abstract var id: Int
     abstract var publishedAt: String
     abstract var description: String
-   // abstract var source: Source
+    abstract var source: Source
+    abstract var url: String
     abstract var title: String
     abstract var author: String
     abstract var urlToImage: String

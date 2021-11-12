@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.newspaper.R
 import com.example.newspaper.databinding.FragmentSettingsBinding
 import com.example.newspaper.viewmodel.SettingsFragmentViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -40,6 +42,8 @@ class SettingsFragment : Fragment() {
         //Слушатель для отправки нового состояния в настройки
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             viewModel.deleteNews()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
             when(checkedId) {
                 R.id.radio_us -> viewModel.putCategoryProperty(LANG_US)
                 R.id.radio_ru -> viewModel.putCategoryProperty(LANG_RU)

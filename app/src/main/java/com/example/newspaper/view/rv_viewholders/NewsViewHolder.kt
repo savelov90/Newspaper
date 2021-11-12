@@ -3,9 +3,10 @@ package com.example.newspaper.view.rv_viewholders
 import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.databinding.NewsItemBinding
+import com.squareup.picasso.Picasso
 
 
 //В конструктор класс передается layout, который мы создали(film_item.xml)
@@ -25,19 +26,19 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //Устанавливаем постер
         //Указываем контейнер, в которм будет "жить" наша картинка
 
-        Glide.with(itemView)
-            //Загружаем сам ресурс
-            .load(Uri.parse(article.urlToImage))
-            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-            .error(android.R.drawable.stat_notify_error)
-            //Центруем изображение
-            .centerCrop()
-            //Указываем ImageView, куда будем загружать изображение
-            .into(picture)
+        Picasso.get()
+                .load(article.urlToImage)
+                .error(android.R.drawable.stat_notify_error)
+                .into(picture)
 
         //Устанавливаем описание
-        source.text = article.author
-        time.text = article.publishedAt
+        source.text = article.source.name
+        time.text = editData(article.publishedAt)
+    }
 
+    private fun editData(data:String) : String {
+        val edit = data.toCharArray()
+        val string = "${edit[8]}" + "${edit[8]}" + "." + "${edit[5]}" + "${edit[6]}" + "." + "${edit[0]}" + "${edit[1]}" + "${edit[2]}" + "${edit[3]}"
+        return string
     }
 }

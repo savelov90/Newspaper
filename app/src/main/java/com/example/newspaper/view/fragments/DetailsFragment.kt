@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.ColumnInfo
-import com.bumptech.glide.Glide
 import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_fav.ArticleFavorite
@@ -17,11 +15,13 @@ import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
 import com.example.newspaper.viewmodel.DetailsFragmentViewModel
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
+import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
+@Suppress("DEPRECATION")
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
@@ -99,8 +99,9 @@ class DetailsFragment : Fragment() {
             title = articleAbstract.title,
             urlToImage = articleAbstract.urlToImage,
             isInFavorites = articleAbstract.isInFavorites,
-            author = articleAbstract.author
-            )
+            author = articleAbstract.author,
+            url = articleAbstract.url,
+            source = articleAbstract.source)
 
         return articleFavorite
     }
@@ -112,9 +113,8 @@ class DetailsFragment : Fragment() {
         //Устанавливаем заголовок
         binding.detailsTitle.text = articleAbstract.title
         //Устанавливаем картинку
-        Glide.with(this)
+        Picasso.get()
             .load(articleAbstract.urlToImage)
-            .centerCrop()
             .into(binding.detailsPoster)
         //Устанавливаем описание
         binding.detailsDescription.text = articleAbstract.description
