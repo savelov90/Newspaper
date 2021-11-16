@@ -1,20 +1,20 @@
 package com.example.newspaper.view.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_fav.ArticleFavorite
-import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentDetailsBinding
 import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
 import com.example.newspaper.viewmodel.DetailsFragmentViewModel
-import com.example.newspaper.viewmodel.HomeFragmentViewModel
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -43,8 +43,8 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
 
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
@@ -73,9 +73,6 @@ class DetailsFragment : Fragment() {
                 }
                 .addTo(autoDisposable)
 
-
-
-
         binding.detailsFabFavorites.setOnClickListener {
             if (!articleAbstract.isInFavorites) {
                 binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
@@ -89,38 +86,56 @@ class DetailsFragment : Fragment() {
                 viewModel.delFav(articleFavorite)
             }
         }
+
+        val link = articleAbstract.url
+        binding.detailsFabOrigin.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            startActivity(browserIntent)
+        }
+
+        binding.detailsFabShare.setOnClickListener {
+            //Создаем интент
+            val intent = Intent()
+            //Указываем action с которым он запускается
+            intent.action = Intent.ACTION_SEND
+            //Кладем данные о нашем фильме
+            intent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Смотри какая новость: ${articleAbstract.title}"
+            )
+            //Указываем MIME тип, чтобы система знала, какое приложения предложить
+            intent.type = "text/plain"
+            //Запускаем наше активити
+            startActivity(Intent.createChooser(intent, "Share To:"))
+        }
     }
 
     private fun getArticleFavorite(articleAbstract: ArticleAbstract): ArticleFavorite {
         val articleFavorite = ArticleFavorite(
-            id = articleAbstract.id,
-            publishedAt = articleAbstract.publishedAt,
-            description = articleAbstract.description,
-            title = articleAbstract.title,
-            urlToImage = articleAbstract.urlToImage,
-            isInFavorites = articleAbstract.isInFavorites,
-            author = articleAbstract.author,
-            url = articleAbstract.url,
-            source = articleAbstract.source)
+                id = articleAbstract.id,
+                publishedAt = articleAbstract.publishedAt,
+                description = articleAbstract.description,
+                title = articleAbstract.title,
+                urlToImage = articleAbstract.urlToImage,
+                isInFavorites = articleAbstract.isInFavorites,
+                author = articleAbstract.author,
+                url = articleAbstract.url)
 
         return articleFavorite
     }
 
     private fun setFilmsDetails() {
         //Получаем наш фильм из переданного бандла
-        articleAbstract = arguments?.get("article") as ArticleAbstract
+        articleAbstract = arguments?.getParcelable<ArticleAbstract>("article") as ArticleAbstract
 
         //Устанавливаем заголовок
         binding.detailsTitle.text = articleAbstract.title
         //Устанавливаем картинку
         Picasso.get()
-            .load(articleAbstract.urlToImage)
-            .into(binding.detailsPoster)
+                .load(articleAbstract.urlToImage)
+                .into(binding.detailsPoster)
         //Устанавливаем описание
         binding.detailsDescription.text = articleAbstract.description
 
-
     }
-
-
 }

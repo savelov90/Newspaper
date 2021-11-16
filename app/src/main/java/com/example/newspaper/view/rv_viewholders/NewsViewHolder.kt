@@ -32,7 +32,7 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .into(picture)
 
         //Устанавливаем описание
-        source.text = article.source.name
+        source.text = article.author
         time.text = editData(article.publishedAt)
     }
 
