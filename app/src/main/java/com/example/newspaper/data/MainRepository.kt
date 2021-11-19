@@ -36,4 +36,6 @@ class MainRepository(private val newsDao: NewsDao) {
     fun getAllFromFav(): Observable<List<ArticleFavorite>> = newsDao.getFav()
 
     fun checkFav(search: String): Observable<ArticleFavorite> = newsDao.checkFav(search)
+
+    fun getAllFav(): List<ArticleFavorite> = newsDao.getAllFav()
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newspaper.data.db_fav.ArticleAbstract
+import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.disposable.AutoDisposable
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
     private lateinit var newsAdapter: NewsListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
     private val autoDisposable = AutoDisposable()
+
+    private lateinit var favoriteslist: List<ArticleFavorite>
 
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
@@ -51,13 +54,27 @@ class HomeFragment : Fragment() {
         initPullToRefresh()
         initRecyckler()
 
+        favoriteslist = viewModel.getAllFav()
+
         viewModel.newsListData
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { list ->
+                    for (i in 0..list.size) {
+                        for (j in 0..favoriteslist.size) {
+                            if(list[i].title == favoriteslist[j].title) {
+                                list[i].isInFavorites = true
+                            }
+                        }
+                    }
+
                     newsAdapter.addItems(list)
                 }
                 .addTo(autoDisposable)
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onResume() {

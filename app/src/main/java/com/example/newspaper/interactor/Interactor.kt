@@ -50,4 +50,6 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     }
     //Метод для получения настроек
     fun getDefaultLangFromPreferences() = preferences.getDefaultLang()
+
+    fun getAllFav(): List<ArticleFavorite> = repo.getAllFav()
 }

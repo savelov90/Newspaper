@@ -14,6 +14,7 @@ interface NewsDao {
     //Запрос на всю таблицу
     @Query("SELECT * FROM cach_news")
     fun getCachedNews(): Observable<List<Article>>
+
     //Кладём списком в БД, в случае конфликта перезаписываем
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<Article>)
@@ -26,12 +27,18 @@ interface NewsDao {
     //Кладём элемент избранного в БД, в случае конфликта перезаписываем
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFav(articleFavorite: ArticleFavorite)
+
     //Удаление новости из избранного
     @Delete
     fun deleteFav(articleFavorite: ArticleFavorite)
+
     @Query("SELECT * FROM fav_news")
     fun getFav(): Observable<List<ArticleFavorite>>
 
     @Query("SELECT * FROM fav_news WHERE title LIKE :search")
     fun checkFav(search: String): Observable<ArticleFavorite>
+
+    @Query("SELECT * FROM fav_news")
+    fun getAllFav(): List<ArticleFavorite>
+
 }

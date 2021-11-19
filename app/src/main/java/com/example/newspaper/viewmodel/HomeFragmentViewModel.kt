@@ -3,6 +3,7 @@ package com.example.newspaper.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
+import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.interactor.Interactor
 import io.reactivex.rxjava3.core.Observable
@@ -19,13 +20,13 @@ class HomeFragmentViewModel : ViewModel() {
     init {
         App.instance.dagger.inject(this)
         newsListData = interactor.getNewsFromDB()
-        getNews()
     }
 
     fun getNews() {
         interactor.getNewsFromApi()
-
     }
+
+    fun getAllFav(): List<ArticleFavorite> = interactor.getAllFav()
 
 
 
