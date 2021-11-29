@@ -13,25 +13,18 @@ import javax.inject.Inject
 class HomeFragmentViewModel : ViewModel() {
 
     val newsListData: Observable<List<Article>>
-    //Инициализируем интерактор
+       //Инициализируем интерактор
     @Inject
     lateinit var interactor: Interactor
 
     init {
         App.instance.dagger.inject(this)
         newsListData = interactor.getNewsFromDB()
+
     }
 
     fun getNews() {
         interactor.getNewsFromApi()
     }
 
-    fun getAllFav(): List<ArticleFavorite> = interactor.getAllFav()
-
-
-
-    interface ApiCallback {
-        fun onFailure()
-        fun onSuccess()
-    }
 }

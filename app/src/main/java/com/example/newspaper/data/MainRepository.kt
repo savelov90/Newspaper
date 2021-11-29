@@ -16,6 +16,13 @@ class MainRepository(private val newsDao: NewsDao) {
         }
     }
 
+    fun putToDb(article: Article) {
+        //Запросы в БД должны быть в отдельном потоке
+        Executors.newSingleThreadExecutor().execute {
+            newsDao.insertOne(article)
+        }
+    }
+
     fun getAllFromDB(): Observable<List<Article>> = newsDao.getCachedNews()
 
     fun deleteAll() = newsDao.deleteAll()
@@ -37,5 +44,5 @@ class MainRepository(private val newsDao: NewsDao) {
 
     fun checkFav(search: String): Observable<ArticleFavorite> = newsDao.checkFav(search)
 
-    fun getAllFav(): List<ArticleFavorite> = newsDao.getAllFav()
+    fun getAllFav(): Observable<List<ArticleFavorite>> = newsDao.getAllFav()
 }

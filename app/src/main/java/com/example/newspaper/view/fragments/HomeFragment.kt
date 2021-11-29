@@ -18,6 +18,8 @@ import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 @Suppress("DEPRECATION")
@@ -26,8 +28,8 @@ class HomeFragment : Fragment() {
     private lateinit var newsAdapter: NewsListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
     private val autoDisposable = AutoDisposable()
-
-    private lateinit var favoriteslist: List<ArticleFavorite>
+    private lateinit var allFav: Observable<List<ArticleFavorite>>
+    private lateinit var allNews: Observable<List<Article>>
 
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
@@ -53,33 +55,26 @@ class HomeFragment : Fragment() {
 
         initPullToRefresh()
         initRecyckler()
+    }
 
-        favoriteslist = viewModel.getAllFav()
+    override fun onStart() {
+        super.onStart()
 
-        viewModel.newsListData
-                .subscribeOn(Schedulers.io())
+        viewModel.getNews()
+
+        allNews = viewModel.newsListData
+
+        allNews.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { list ->
-                    for (i in 0..list.size) {
-                        for (j in 0..favoriteslist.size) {
-                            if(list[i].title == favoriteslist[j].title) {
-                                list[i].isInFavorites = true
-                            }
-                        }
-                    }
-
                     newsAdapter.addItems(list)
                 }
                 .addTo(autoDisposable)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun onResume() {
         super.onResume()
-        viewModel.getNews()
+
     }
 
     private fun initRecyckler() {
@@ -110,6 +105,7 @@ class HomeFragment : Fragment() {
             newsAdapter.items.clear()
             //Делаем новый запрос фильмов на сервер
             viewModel.getNews()
+
             //Убираем крутящееся колечко
             binding.pullToRefresh.isRefreshing = false
         }

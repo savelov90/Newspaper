@@ -19,6 +19,9 @@ interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<Article>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOne(article: Article)
+
     @Query("DELETE FROM cach_news")
     fun deleteAll()
 
@@ -39,6 +42,6 @@ interface NewsDao {
     fun checkFav(search: String): Observable<ArticleFavorite>
 
     @Query("SELECT * FROM fav_news")
-    fun getAllFav(): List<ArticleFavorite>
+    fun getAllFav(): Observable<List<ArticleFavorite>>
 
 }
