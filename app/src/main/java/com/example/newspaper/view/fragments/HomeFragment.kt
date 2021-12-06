@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleAbstract
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
@@ -14,6 +15,7 @@ import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
 import com.example.newspaper.view.MainActivity
+import com.example.newspaper.view.rv_adapters.NewsCategoryAdapter
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
 import com.example.newspaper.viewmodel.HomeFragmentViewModel
@@ -26,9 +28,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class HomeFragment : Fragment() {
 
     private lateinit var newsAdapter: NewsListRecyclerAdapter
+    private lateinit var newsCategoryAdapter: NewsCategoryAdapter
     private lateinit var binding: FragmentHomeBinding
     private val autoDisposable = AutoDisposable()
-    private lateinit var allFav: Observable<List<ArticleFavorite>>
     private lateinit var allNews: Observable<List<Article>>
 
     private val viewModel by lazy {
@@ -55,6 +57,8 @@ class HomeFragment : Fragment() {
 
         initPullToRefresh()
         initRecyckler()
+        initRecyclerCat()
+        newsCategoryAdapter.addItems(getCatList())
     }
 
     override fun onStart() {
@@ -96,6 +100,33 @@ class HomeFragment : Fragment() {
             val decorator = TopSpacingItemDecoration(10)
             addItemDecoration(decorator)
         }
+    }
+
+    private fun initRecyclerCat() {
+        //находим наш RV
+        binding.categoryRecycler.apply {
+            //Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс,
+            //оставим его пока пустым, он нам понадобится во второй части задания
+            newsCategoryAdapter =
+               NewsCategoryAdapter(object : NewsCategoryAdapter.OnItemClickListener {
+                   override fun click(string: String) {
+                       viewModel.setCategoryProperty(string)
+                       viewModel.getNews()
+                   }
+               })
+            //Присваиваем адаптер
+            adapter = newsCategoryAdapter
+            //Присвои layoutmanager
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            //Применяем декоратор для отступов
+            val decorator = TopSpacingItemDecoration(10)
+            addItemDecoration(decorator)
+        }
+    }
+
+
+    private fun getCatList(): List<String> {
+        return this.resources.getStringArray(R.array.api_category).toList()
     }
 
     private fun initPullToRefresh() {

@@ -10,6 +10,7 @@ interface NewsApi {
     @GET("v2/top-headlines")
     fun getNews(
             @Query("country") language: String,
+            @Query("category") category: String,
             @Query("apiKey") apiKey: String
     ): Observable<NewsData>
 }

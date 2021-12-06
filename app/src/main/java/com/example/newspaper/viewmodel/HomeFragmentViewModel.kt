@@ -3,6 +3,7 @@ package com.example.newspaper.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.newspaper.App
+import com.example.newspaper.R
 import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.interactor.Interactor
@@ -13,18 +14,23 @@ import javax.inject.Inject
 class HomeFragmentViewModel : ViewModel() {
 
     val newsListData: Observable<List<Article>>
-       //Инициализируем интерактор
+
+    //Инициализируем интерактор
     @Inject
     lateinit var interactor: Interactor
 
     init {
         App.instance.dagger.inject(this)
         newsListData = interactor.getNewsFromDB()
-
     }
 
     fun getNews() {
         interactor.getNewsFromApi()
+    }
+
+    fun setCategoryProperty(category: String) {
+        //Сохраняем в настройки
+        interactor.setCategory(category)
     }
 
 }

@@ -8,6 +8,7 @@ class PreferenceProvider(context: Context) {
     //Нам нужен контекст приложения
     private val appContext = context.applicationContext
 
+    private var category : String
     //Создаем экземпляр SharedPreferences
     private val preference: SharedPreferences = appContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
@@ -18,6 +19,7 @@ class PreferenceProvider(context: Context) {
             preference.edit { putString(KEY_DEFAULT_LANG, DEFAULT_LANG) }
             preference.edit { putBoolean(KEY_FIRST_LAUNCH, false) }
         }
+        category = "business"
     }
 
     //Category prefs
@@ -29,6 +31,15 @@ class PreferenceProvider(context: Context) {
     fun getDefaultLang(): String {
         return preference.getString(KEY_DEFAULT_LANG, DEFAULT_LANG) ?: DEFAULT_LANG
     }
+
+    fun setCategory(categoryFromRecycler: String) {
+        category = categoryFromRecycler
+    }
+
+    fun getCategory() : String {
+        return category
+    }
+
     //Ключи для наших настроек, по ним мы их будем получать
     companion object {
         private const val KEY_FIRST_LAUNCH = "first_launch"

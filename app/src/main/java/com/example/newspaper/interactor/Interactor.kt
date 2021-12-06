@@ -19,7 +19,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
 
     fun getNewsFromApi() {
 
-        retrofitService.getNews(getDefaultLangFromPreferences(), ApiConstants.API_KEY)
+        retrofitService.getNews(getDefaultLangFromPreferences(), getDefaultCategory() , ApiConstants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map {
                     it.articles
@@ -95,5 +95,11 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     //Метод для получения настроек
     fun getDefaultLangFromPreferences() = preferences.getDefaultLang()
 
+    //Метод для получения категории
+    fun getDefaultCategory() = preferences.getCategory()
+
     fun getAllFav(): Observable<List<ArticleFavorite>> = repo.getAllFav()
+    fun setCategory(category: String) {
+        preferences.setCategory(category)
+    }
 }
