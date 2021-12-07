@@ -36,10 +36,17 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //Устанавливаем постер
         //Указываем контейнер, в которм будет "жить" наша картинка
 
-        Picasso.get()
+        if (article.urlToImage.isEmpty()) {
+            Picasso.get()
+                .load(R.string.advert.toString())
+                .error(android.R.drawable.stat_notify_error)
+                .into(picture)
+        } else{
+            Picasso.get()
                 .load(article.urlToImage)
                 .error(android.R.drawable.stat_notify_error)
                 .into(picture)
+        }
 
         //Устанавливаем описание
         source.text = article.author

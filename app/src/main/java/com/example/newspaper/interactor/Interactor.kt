@@ -22,7 +22,11 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
         retrofitService.getNews(getDefaultLangFromPreferences(), getDefaultCategory() , ApiConstants.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .map {
-                    it.articles
+                    val articlesAPI = it.articles
+                    articlesAPI.forEach {
+                        it.author = it.source.name
+                    }
+                    articlesAPI
                 }
                 .subscribeBy(
                         onError = {
@@ -71,7 +75,8 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
                             urlToImage = it.urlToImage,
                             isInFavorites = it.isInFavorites,
                             author = it.author,
-                            url = it.url
+                            url = it.url,
+                            source = it.source
                     )
             )
         }

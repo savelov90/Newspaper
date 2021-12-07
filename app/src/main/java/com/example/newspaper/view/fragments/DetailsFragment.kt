@@ -119,7 +119,8 @@ class DetailsFragment : Fragment() {
                 urlToImage = articleAbstract.urlToImage,
                 isInFavorites = articleAbstract.isInFavorites,
                 author = articleAbstract.author,
-                url = articleAbstract.url)
+                url = articleAbstract.url,
+                source = articleAbstract.source)
 
         return articleFavorite
     }
