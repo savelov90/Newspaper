@@ -22,8 +22,8 @@ class RemoteModule {
     //Создаём кастомный клиент
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
             //Настраиваем таймауты для медленного интернета
-        .callTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
+        .callTimeout(3, TimeUnit.SECONDS)
+        .readTimeout(3, TimeUnit.SECONDS)
             //Добавляем логгер
         .addInterceptor(HttpLoggingInterceptor().apply {
             if (BuildConfig.DEBUG) {

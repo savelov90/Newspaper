@@ -15,6 +15,7 @@ import com.example.newspaper.view.rv_viewholders.NewsViewHolder
 class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
     val items = mutableListOf<String>()
+    private var category = "business"
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
     override fun getItemCount() = items.size
@@ -30,9 +31,18 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
             is NewsCategoryViewHolder -> {
                 //Вызываем метод bind(), который мы создали, и передаем туда объект
                 //из нашей базы данных с указанием позиции
-                holder.bind(items[position])
-                holder.itemView.setOnClickListener {
-                    clickListener.click(items[position])
+                if (items[position] == category) {
+                    holder.category.textScaleX = 2F
+                    holder.bind(items[position])
+                    holder.itemView.setOnClickListener {
+                        clickListener.click(items[position])
+                    }
+                } else {
+                    holder.bind(items[position])
+                    holder.itemView.setOnClickListener {
+                        clickListener.click(items[position])
+                    }
+
                 }
             }
         }
@@ -48,6 +58,14 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
         notifyDataSetChanged()
     }
 
+
+    fun setCategory(categoryFromRecycler: String) {
+        category = categoryFromRecycler
+    }
+
+    fun getCategory() : String {
+        return category
+    }
 
     //Интерфейс для обработки кликов
     interface OnItemClickListener {
