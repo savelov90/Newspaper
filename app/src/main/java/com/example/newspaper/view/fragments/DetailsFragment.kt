@@ -66,8 +66,8 @@ class DetailsFragment : Fragment() {
                 .subscribe { art ->
                     result = art
                     binding.detailsFabFavorites.setImageResource(
-                            if (result.title == articleAbstract.title) R.drawable.ic_sharp_favorite_24
-                            else R.drawable.ic_sharp_favorite_border_24
+                            if (result.title == articleAbstract.title) R.drawable.ic_sharp_bookmark_24
+                            else R.drawable.ic_sharp_bookmark_border_24
                     )
                     articleAbstract.isInFavorites = result.title == articleAbstract.title
                 }
@@ -75,12 +75,12 @@ class DetailsFragment : Fragment() {
 
         binding.detailsFabFavorites.setOnClickListener {
             if (!articleAbstract.isInFavorites) {
-                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_24)
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_bookmark_24)
                 articleFavorite.isInFavorites = true
                 articleAbstract.isInFavorites = true
                 viewModel.putFav(articleFavorite)
             } else {
-                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_favorite_border_24)
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_sharp_bookmark_border_24)
                 articleFavorite.isInFavorites = false
                 articleAbstract.isInFavorites = false
                 viewModel.delFav(articleFavorite)
@@ -134,6 +134,7 @@ class DetailsFragment : Fragment() {
         //Устанавливаем картинку
         Picasso.get()
                 .load(articleAbstract.urlToImage)
+                .resize(800,500)
                 .into(binding.detailsPoster)
         //Устанавливаем описание
         binding.detailsDescription.text = articleAbstract.description

@@ -1,6 +1,8 @@
 package com.example.newspaper.view.rv_adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +17,10 @@ import com.example.newspaper.view.rv_viewholders.NewsViewHolder
 class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
     val items = mutableListOf<String>()
-    private var category = "business"
+    private var category : String
+    init {
+        category = "business"
+    }
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
     override fun getItemCount() = items.size
@@ -26,18 +31,21 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
     }
 
     //В этом методе будет привязка полей из объекта String к View из news_category.xml
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is NewsCategoryViewHolder -> {
                 //Вызываем метод bind(), который мы создали, и передаем туда объект
                 //из нашей базы данных с указанием позиции
                 if (items[position] == category) {
-                    holder.category.textScaleX = 2F
+                    holder.category.setTextColor(Color.BLACK)
                     holder.bind(items[position])
                     holder.itemView.setOnClickListener {
                         clickListener.click(items[position])
                     }
                 } else {
+                    holder.category.textScaleX = 1F
+                    holder.category.setTextColor(Color.GRAY)
                     holder.bind(items[position])
                     holder.itemView.setOnClickListener {
                         clickListener.click(items[position])
@@ -49,6 +57,7 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
     }
 
     //Метод для добавления объектов в наш список
+    @SuppressLint("NotifyDataSetChanged")
     fun addItems(list: List<String>) {
         //Сначала очищаем(если не реализовать DiffUtils)
         items.clear()

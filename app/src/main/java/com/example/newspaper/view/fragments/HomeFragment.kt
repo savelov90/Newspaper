@@ -1,5 +1,6 @@
 package com.example.newspaper.view.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,7 +64,7 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        viewModel.setCategoryProperty("business")
         viewModel.getNews()
 
         allNews = viewModel.newsListData
@@ -74,11 +75,6 @@ class HomeFragment : Fragment() {
                     newsAdapter.addItems(list)
                 }
                 .addTo(autoDisposable)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     private fun initRecyckler() {
@@ -109,8 +105,11 @@ class HomeFragment : Fragment() {
             //оставим его пока пустым, он нам понадобится во второй части задания
             newsCategoryAdapter =
                NewsCategoryAdapter(object : NewsCategoryAdapter.OnItemClickListener {
+                   @SuppressLint("NotifyDataSetChanged")
                    override fun click(string: String) {
                        viewModel.setCategoryProperty(string)
+                       newsCategoryAdapter.setCategory(string)
+                       newsCategoryAdapter.addItems(getCatList())
                        viewModel.getNews()
                    }
                })

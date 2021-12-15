@@ -39,11 +39,13 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (article.urlToImage.isEmpty()) {
             Picasso.get()
                 .load(R.string.advert.toString())
+                .resize(800,500)
                 .error(android.R.drawable.stat_notify_error)
                 .into(picture)
         } else{
             Picasso.get()
                 .load(article.urlToImage)
+                .resize(800,500)
                 .error(android.R.drawable.stat_notify_error)
                 .into(picture)
         }
@@ -53,8 +55,8 @@ class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         time.text = editData(article.publishedAt)
 
         like.setImageResource(
-                if (article.isInFavorites) R.drawable.ic_sharp_favorite_24
-                else R.drawable.ic_sharp_favorite_border_24
+                if (article.isInFavorites) R.drawable.ic_sharp_bookmark_24
+                else R.drawable.ic_sharp_bookmark_border_24
         )
 
     }
