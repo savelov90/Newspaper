@@ -19,7 +19,7 @@ class PreferenceProvider(context: Context) {
             preference.edit { putString(KEY_DEFAULT_LANG, DEFAULT_LANG) }
             preference.edit { putBoolean(KEY_FIRST_LAUNCH, false) }
         }
-        category = "business"
+        category = "General"
     }
 
     //Category prefs

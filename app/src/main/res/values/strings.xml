@@ -12,13 +12,13 @@
     <string name="radio_group_header">Страна и язык:</string>
 
     <string-array name="api_category">
-        <item>business</item>
-        <item>entertainment</item>
-        <item>general</item>
-        <item>health</item>
-        <item>science</item>
-        <item>sports</item>
-        <item>technology</item>
+        <item>General</item>
+        <item>Entertainment</item>
+        <item>Sports</item>
+        <item>Business</item>
+        <item>Technology</item>
+        <item>Health</item>
+        <item>Science</item>
     </string-array>
 
     <string name="advert">https://cdn1.ozone.ru/s3/multimedia-3/c1200/6101254683.jpg</string>

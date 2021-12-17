@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.setCategoryProperty("business")
+        viewModel.setCategoryProperty("General")
         viewModel.getNews()
 
         allNews = viewModel.newsListData

@@ -19,7 +19,7 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
     val items = mutableListOf<String>()
     private var category : String
     init {
-        category = "business"
+        category = "General"
     }
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
@@ -38,14 +38,14 @@ class NewsCategoryAdapter(private val clickListener: OnItemClickListener) : Recy
                 //Вызываем метод bind(), который мы создали, и передаем туда объект
                 //из нашей базы данных с указанием позиции
                 if (items[position] == category) {
-                    holder.category.setTextColor(Color.BLACK)
+                    holder.category.setTextColor(Color.DKGRAY)
                     holder.bind(items[position])
                     holder.itemView.setOnClickListener {
                         clickListener.click(items[position])
                     }
                 } else {
                     holder.category.textScaleX = 1F
-                    holder.category.setTextColor(Color.GRAY)
+                    holder.category.setTextColor(Color.LTGRAY)
                     holder.bind(items[position])
                     holder.itemView.setOnClickListener {
                         clickListener.click(items[position])

@@ -4,7 +4,8 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_sharp_home_24"
-        android:title="@string/menu_home_title_text"/>
+        android:title="@string/menu_home_title_text"
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/ic_sharp_bookmark_24"
