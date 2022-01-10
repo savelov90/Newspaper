@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.newspaper.R
 import com.example.newspaper.databinding.FragmentSettingsBinding
+import com.example.newspaper.view.AnimationHelper
 import com.example.newspaper.viewmodel.SettingsFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -29,6 +30,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.settingsFragmentRoot, requireActivity(), 3)
 
         //Слушаем, какой у нас сейчас выбран вариант в настройках
         viewModel.categoryPropertyLifeData.observe(viewLifecycleOwner, Observer<String> {

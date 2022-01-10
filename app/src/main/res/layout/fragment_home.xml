@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="invisible"
+    tools:visibility="visible"
+    android:id="@+id/home_fragment_root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.HomeFragment">
 

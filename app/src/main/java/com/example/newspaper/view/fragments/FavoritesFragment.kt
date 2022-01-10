@@ -12,6 +12,7 @@ import com.example.newspaper.data.db_fav.ArticleFavorite
 import com.example.newspaper.databinding.FragmentFavoritesBinding
 import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
+import com.example.newspaper.view.AnimationHelper
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
 import com.example.newspaper.view.rv_adapters.TopSpacingItemDecoration
@@ -50,6 +51,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.favoritesFragmentRoot, requireActivity(), 2)
 
         initFav()
 

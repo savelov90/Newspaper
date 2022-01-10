@@ -15,6 +15,7 @@ import com.example.newspaper.data.db_first.entity.Article
 import com.example.newspaper.databinding.FragmentHomeBinding
 import com.example.newspaper.disposable.AutoDisposable
 import com.example.newspaper.disposable.addTo
+import com.example.newspaper.view.AnimationHelper
 import com.example.newspaper.view.MainActivity
 import com.example.newspaper.view.rv_adapters.NewsCategoryAdapter
 import com.example.newspaper.view.rv_adapters.NewsListRecyclerAdapter
@@ -55,6 +56,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
 
         initPullToRefresh()
         initRecyckler()
